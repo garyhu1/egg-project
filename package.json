@@ -1,0 +1,41 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "egg": {
+    "declarations": true
+  },
+  "dependencies": {
+    "egg": "^2.22.2",
+    "egg-scripts": "^2.11.0",
+    "egg-validate": "^2.0.2",
+    "egg-view-ejs": "^2.0.0"
+  },
+  "devDependencies": {
+    "egg-bin": "^4.13.0",
+    "egg-ci": "^1.11.0",
+    "egg-mock": "^3.21.0"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "scripts": {
+    "start": "egg-scripts start --daemon --title=egg-server-project",
+    "stop": "egg-scripts stop --title=egg-server-project",
+    "dev": "egg-bin dev",
+    "debug": "egg-bin debug",
+    "test": "npm run lint -- --fix && npm run test-local",
+    "test-local": "egg-bin test",
+    "cov": "egg-bin cov"
+  },
+  "ci": {
+    "version": "10"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "garyhu",
+  "license": "MIT"
+}

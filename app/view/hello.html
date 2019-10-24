@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>测试CSS滚屏效果</title>
+    <style>
+        html,p,div {
+          margin: 0px;
+          padding: 0px;
+        }
+
+        .contant{
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                display: inline-block;
+                width:100px;
+                border:1px solid red;
+                overflow:hidden;
+
+        }
+
+        #out-line {
+          width: 200px;
+          height: 200px;
+          margin-top: 100px;
+          margin-left: 100px;
+          background-color: #FF00FF;
+          outline: 20px solid #000;
+          outline-offset: -118px;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <p>自定义的ajax</p>
+      <p>使用Promise封装原生的ajax</p>
+      <p id="content" data-text="hello world!"></p>
+    </div>
+    <button id="btn">请求数据</button>
+
+    <audio controls> 
+
+    </audio>
+
+    <blockquote cite="https://codingcoach.io/">
+      Coding Coach is a free, open-source platform which aims to connect software developers and mentors all over the world. It is built by a group of talented and passionate developers, designers, engineers, and humans who want to make the engineering world a better place to collaborate. This project was born out of a desire to provide a platform to connect mentors and mentees throughout the world at no cost. Coding Coach is created by the people, for the people.
+    </blockquote>
+    <span class="contant">
+        北京市海淀区宝盛路1号院11号楼2层205、001088854918北京市海淀区宝盛路1号院11号楼2层205、001088854918
+    </span>  
+
+    <div id="out-line"></div>
+  </body>
+
+  <script>
+    function myAJAX(params) {
+      let promise = new Promise((resolve,reject) => {
+        let request;
+        if(window.XMLHttpRequest){
+          request = new XMLHttpRequest();
+        }else {
+          request = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        request.onreadystatechange = () => {
+          if(request.readyState === 4){
+            // 判断响应结果:
+            if (request.status === 200) {
+                // 成功，通过responseText拿到响应的文本:
+                resolve(request.responseText);
+            } else {
+                // 失败，根据响应码判断失败原因:
+                reject(request.status);
+            }
+          }else {
+            // TODO 请求还在继续
+          }
+        }
+
+        // 只支持GET和POST请求
+        if(params.method !== "GET" && params.method !== "POST"){
+          reject("不支持该请求");
+        }else {
+          request.open(params.method,params.url);
+          request.setRequestHeader("Content-type","application/json");
+          request.send(params.data);
+        }
+      });
+
+      return promise;
+    }
+
+    var pp = document.getElementById("content");
+
+    var eve = new CustomEvent("myHandler",{detail: pp.dataset.text});
+
+    pp.addEventListener("myHandler",myAJAX);
+
+    document.getElementById("btn").onclick = () => {
+      pp.dispatch(eve);
+    }
+
+    let url = document.location.toString();
+
+    alert(url);
+
+    var aa = 10;
+    aa.pro = 10;
+    console.log(aa.pro + aa);
+
+    var ss = "hello";
+    ss.pro = "world";
+    console.log(ss.pro+ss);
+
+    var xx = 1, yy = zz = 0;
+
+    function add(n) {
+      n = n + 1;
+    }
+
+    yy = add(xx);
+
+    function add(n) {
+      n = n + 3;
+    }
+
+    zz = add(xx);
+
+    console.log(xx,yy,zz);
+
+    var ii = 5;
+    function fo(){
+      var ii = 4;
+      var fi = new Function("alert(ii);")
+      fi();
+    }
+    fo();
+
+    var fqq = 1;
+    function bar1(){
+      fqq = 10;
+      return;
+      function fqq(){}
+    }
+    bar1();
+    console.log(fqq);
+
+    // 测试
+    function testLL(a) {
+      a = {
+        key: 1
+      }
+    }
+
+    var bbaa = {
+      k: 10
+    }
+
+    testLL(bbaa);
+    alert(bbaa.key)
+
+    // 测试
+    console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+    alert(test111);
+    test_11();
+    var test111 = 1;
+    function test_11() {
+      alert(10)
+    }
+    alert(test111)
+    test111 = 100;
+    test_11();
+
+
+    // 测试
+    window.val1 = 1;
+
+    var obj = {
+      val1 : 2,
+      db1: function() {
+        this.val1 *= 2;
+        val1 *= 2;
+        console.log(val1);
+        console.log(this.val1);
+      }
+    }
+
+    obj.db1();
+
+    var funcc = obj.db1;
+
+    funcc();
+
+    let sums = function(l1,l2){
+      // Array.prototype.reverse.call(l1);
+      // Array.prototype.reverse.call(l2);
+      l1.reverse();
+      l2.reverse();
+
+      let str1 = l1.join("");
+      let str2 = l2.join("");
+      let num1 = Number(str1);
+      let num2 = Number(str2);
+      let num = num1+num2;
+      let arr = num.toString().split("");
+      return arr;
+    }
+
+    let l1 = [3,5,1]
+    let l2 = [6,4,8]
+
+    let ar = sums(l1,l2);
+
+    console.log(ar)
+
+  </script>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>登录</title>
+        <style >
+            #ll {
+                width: 300px;
+                height: 200px;
+                margin: 120px auto;
+                background: rgb(231, 152, 185);
+                border-radius: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                color: #FFF;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="ll">
+            <label for="username">名称：<input type="text" name="username" id="username"/></label><br/><br/>
+            <label for="password">密码：<input type="password" name="password" id="password"/></label><br/><br/>
+            <button type="submit" style="width: 80px;height: 40px;" id="btn">登录</button>
+        </div>
+    </body>
+    <script>
+        let btn = document.getElementById("btn");
+        btn.onclick = function() {
+            let data = {
+                username: 'garyhu',
+                password: '123456'
+            }
+
+            let params = {
+                url: '/user/login',
+                method: 'POST',
+                data: data
+            }
+
+            myAJAX(params).then((res) => {
+                alert(res)
+            })
+        }
+
+        function myAJAX(params) {
+            let promise = new Promise((resolve,reject) => {
+                let request;
+                if(window.XMLHttpRequest){
+                    request = new XMLHttpRequest();
+                }else {
+                    request = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                request.onreadystatechange = () => {
+                    if(request.readyState === 4){
+                        // 判断响应结果:
+                        if (request.status === 200) {
+                            // 成功，通过responseText拿到响应的文本:
+                            resolve(request.responseText);
+                        } else {
+                            // 失败，根据响应码判断失败原因:
+                            reject(request.status);
+                        }
+                    }else {
+                        // TODO 请求还在继续
+                    }
+                }
+
+                // 只支持GET和POST请求
+                if(params.method !== "GET" && params.method !== "POST"){
+                    reject("不支持该请求");
+                }else {
+                    request.open(params.method,params.url);
+                    request.setRequestHeader("Content-Type","application/json");
+                    request.send(JSON.stringify(params.data));
+                }
+            });
+
+            return promise;
+        }
+    </script>
+</html>
